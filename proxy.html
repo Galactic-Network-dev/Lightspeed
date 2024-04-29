@@ -9,43 +9,33 @@
       font-family: 'Source Code Pro', monospace;
       background-color: #f1f1f1;
       margin: 0;
-      padding: 0;
+      padding: 20px;
     }
 
-    .header {
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 24px;
+    h1 {
       color: #333;
-      text-decoration: none;
+      margin-bottom: 20px;
     }
 
-    .search-form {
-      display: flex;
-      align-items: center;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow: hidden;
-      width: 70%;
-      margin: 20px auto;
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    .search-input {
-      flex-grow: 1;
-      border: none;
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
       padding: 10px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
     }
 
-    .search-button {
+    .form-group button {
       background-color: #ff0000;
       color: #fff;
       border: none;
@@ -53,87 +43,79 @@
       cursor: pointer;
     }
 
-    .search-button:hover {
+    .form-group button:hover {
       background-color: #cc0000;
     }
 
-    .tabs {
-      display: flex;
+    .translated-content {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
       background-color: #fff;
-      border-bottom: 1px solid #ccc;
-      padding: 10px 20px;
-    }
-
-    .tab {
-      margin-right: 10px;
-      padding: 8px 16px;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      border-bottom: 2px solid #ff0000;
-    }
-
-    .content {
-      background-color: #fff;
-      padding: 20px;
-      min-height: 400px;
-    }
-
-    .translated-link {
-      margin: 20px 0;
-      color: #333;
-    }
-
-    .translated-link a {
-      color: #ff0000;
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <a href="#" class="logo">Lightspeed Proxy</a>
-    <form action="#" class="search-form" id="searchForm">
-      <input type="text" class="search-input" id="urlInput" placeholder="Enter URL...">
-      <button type="submit" class="search-button">Go</button>
-    </form>
+  <h1>Lightspeed Proxy</h1>
+  <div class="form-group">
+    <label for="urlInput">Enter URL:</label>
+    <input type="text" id="urlInput" placeholder="Enter URL...">
+    <button onclick="fetchAndTranslate()">Go</button>
   </div>
-  <div class="translated-link" id="translatedLink"></div>
-  <div class="tabs">
-    <div class="tab active">Home</div>
-    <div class="tab">News</div>
-    <div class="tab">Images</div>
-    <div class="tab">Videos</div>
-  </div>
-  <div class="content" id="contentArea">
-    <h2>Welcome to Lightspeed Proxy</h2>
-    <p>Welcome to the simplist proxy to exist we use google translating unblocking method so if that is blocked then this won't work.</p>
-  </div>
+
+  <div class="translated-content" id="translatedContent"></div>
 
   <script>
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form submission
+    function fetchAndTranslate() {
+      var urlInput = document.getElementById('urlInput').value.trim();
+      if (!urlInput) {
+        alert('Please enter a URL.');
+        return;
+      }
 
-      var urlInput = document.getElementById('urlInput').value;
-      var translatedLink = document.getElementById('translatedLink');
-      var contentArea = document.getElementById('contentArea');
+      var proxyUrl = 'http://127.0.0.1:5000/proxy?url=' + encodeURIComponent(urlInput);
 
-      // Display the translated link
-      translatedLink.innerHTML = '<a href="' + urlInput + '" target="_blank">' + urlInput + '</a>';
+      fetch(proxyUrl)
+        .then(response => response.text())
+        .then(data => {
+          // Translate the fetched content using Google Translate API
+          googleTranslate(data, 'en');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
 
-      // Clear the input field
-      document.getElementById('urlInput').value = '';
+    function googleTranslate(content, targetLang) {
+      var apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY'; // Replace with your actual Google Translate API key
+      var apiUrl = 'https://translation.googleapis.com/language/translate/v2?key=' + apiKey;
 
-      // Scroll to the translated link
-      window.scrollTo({
-        top: translatedLink.offsetTop,
-        behavior: 'smooth'
+      var requestBody = {
+        q: content,
+        target: targetLang
+      };
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      })
+      .then(response => response.json())
+      .then(data => {
+        var translatedContent = data.data.translations[0].translatedText;
+        displayTranslatedContent(translatedContent);
+      })
+      .catch(error => {
+        console.error('Translation Error:', error);
       });
+    }
 
-      // For demonstration purposes, update content in contentArea
-      contentArea.innerHTML = '<h2>Translated Link:</h2><p><a href="' + urlInput + '" target="_blank">' + urlInput + '</a></p>';
-    });
+    function displayTranslatedContent(translatedContent) {
+      var translatedContentDiv = document.getElementById('translatedContent');
+      translatedContentDiv.innerHTML = translatedContent;
+    }
   </script>
 </body>
 </html>
