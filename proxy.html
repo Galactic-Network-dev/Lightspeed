@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lightspeed Proxy</title>
+  <style>
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      width: 70%;
+      margin: 20px auto;
+    }
+
+    .search-input {
+      flex-grow: 1;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .search-button {
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #cc0000;
+    }
+
+    .tabs {
+      display: flex;
+      background-color: #fff;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 20px;
+    }
+
+    .tab {
+      margin-right: 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      border-bottom: 2px solid #ff0000;
+    }
+
+    .content {
+      background-color: #fff;
+      padding: 20px;
+      min-height: 400px;
+    }
+
+    .translated-link {
+      margin: 20px 0;
+      color: #333;
+    }
+
+    .translated-link a {
+      color: #ff0000;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="#" class="logo">Lightspeed Proxy</a>
+    <form action="#" class="search-form" id="searchForm">
+      <input type="text" class="search-input" id="urlInput" placeholder="Enter URL...">
+      <button type="submit" class="search-button">Go</button>
+    </form>
+  </div>
+  <div class="translated-link" id="translatedLink"></div>
+  <div class="tabs">
+    <div class="tab active">Home</div>
+    <div class="tab">News</div>
+    <div class="tab">Images</div>
+    <div class="tab">Videos</div>
+  </div>
+  <div class="content" id="contentArea">
+    <h2>Welcome to Lightspeed Proxy</h2>
+    <p>This is a simplified version of a proxy page with tabs like Google.</p>
+  </div>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      var urlInput = document.getElementById('urlInput').value;
+      var translatedLink = document.getElementById('translatedLink');
+      var contentArea = document.getElementById('contentArea');
+
+      // Display the translated link
+      translatedLink.innerHTML = '<a href="' + urlInput + '" target="_blank">' + urlInput + '</a>';
+
+      // Clear the input field
+      document.getElementById('urlInput').value = '';
+
+      // Scroll to the translated link
+      window.scrollTo({
+        top: translatedLink.offsetTop,
+        behavior: 'smooth'
+      });
+
+      // For demonstration purposes, update content in contentArea
+      contentArea.innerHTML = '<h2>Translated Link:</h2><p><a href="' + urlInput + '" target="_blank">' + urlInput + '</a></p>';
+    });
+  </script>
+</body>
+</html>
