@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Lightspeed Proxy</title>
+  <style>
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form-group button {
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .form-group button:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Settings - Lightspeed Proxy</h1>
+  <div class="form-group">
+    <label for="siteName">Site Name:</label>
+    <input type="text" id="siteName" value="Lightspeed Proxy">
+    <button onclick="updateSiteName()">Save</button>
+  </div>
+
+  <script>
+    function updateSiteName() {
+      var siteNameInput = document.getElementById('siteName');
+      var newSiteName = siteNameInput.value;
+
+      // Save the new site name (for demonstration purposes)
+      document.title = 'Settings - ' + newSiteName;
+      alert('Site name updated to: ' + newSiteName);
+    }
+  </script>
+</body>
+</html>
 
