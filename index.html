@@ -3,54 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lightspeed Proxy</title>
+  <title>Main Menu</title>
   <style>
-    body {
-      background-image: url('https://i.gifer.com/origin/55/55c41a4c580cdb65518e222ebeed0e51.gif');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+    @keyframes shine {
+      0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.2); }
+      100% { box-shadow: 0 0 20px 20px rgba(255, 0, 0, 0.5); }
     }
 
-    h1 {
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    li {
-      margin: 0 10px;
-    }
-
-    a {
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      color: #000;
+      border: 2px solid #ff0000;
+      border-radius: 5px;
+      font-size: 16px;
       text-decoration: none;
-      color: #333;
+      transition: box-shadow 0.3s ease-in-out;
+      animation: shine 3s infinite alternate;
+      margin: 5px;
     }
 
-    a:hover {
-      color: #666;
+    .button:hover {
+      box-shadow: 0 0 10px 10px rgba(255, 0, 0, 0.5);
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to Lightspeed Proxy</h1>
-  <ul>
-    <li><a href="proxy.html">Proxy</a></li>
-    <li><a href="games.html">Games</a></li>
-    <li><a href="apps.html">Apps</a></li>
-    <li><a href="chat.html">Chat</a></li>
-    <li><a href="settings.html">Settings</a></li>
-    <li><a href="#">Exit</a></li>
-  </ul>
+  <a href="proxy.html" class="button">Proxy</a>
+  <a href="games.html" class="button">Games</a>
+  <a href="apps.html" class="button">Apps</a>
+  <a href="chat.html" class="button">Chat</a>
+  <a href="settings.html" class="button">Settings</a>
 </body>
 </html>
